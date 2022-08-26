@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/cenkalti/backoff"
 	"go-foundation/pkg/http_client"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 	"time"
@@ -17,10 +17,10 @@ type RestClient struct {
 	body       string
 }
 
-func NewRestClient(client httpclient.HTTPClient, url string) *RestClient {
+func NewRestClient(client httpclient.HTTPClient) *RestClient {
 	return &RestClient{
 		httpClient: client,
-		url:        url,
+		url:        `www.google.com.br`,
 		body:       `{"body": ["test"],"size": 10,"query": {"this": %s}}`,
 	}
 }
@@ -31,15 +31,15 @@ func (rc *RestClient) Post(autorization string, id string) (data []byte, err err
 		req, err := http.NewRequest(http.MethodPost, rc.url, strings.NewReader(fmt.Sprintf(rc.body, id)))
 		req.Header.Add("Authorization", autorization)
 		if err != nil {
-			fmt.Sprintf("Error on request:{%s}", err)
+			fmt.Sprintf("Error on request:{%s}", err.Error())
 			return err
 		}
 		res, err := rc.httpClient.Do(req)
 		if err != nil {
-			fmt.Sprintf("Error on response:{%s}", err)
+			fmt.Sprintf("Error on response:{%s}", err.Error())
 			return err
 		}
-		result, err2 := ioutil.ReadAll(res.Body)
+		result, err2 := io.ReadAll(res.Body)
 		defer func() {
 			err = res.Body.Close()
 			if err != nil || err2 != nil {

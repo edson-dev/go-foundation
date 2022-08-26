@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	endpont = "http://localhost/endpoint"
+	endpoint = "www.google.com.br"
 )
 
 func TestPostPessoaPass(t *testing.T) {
@@ -17,11 +17,11 @@ func TestPostPessoaPass(t *testing.T) {
 		ResponseBody:   expectedResponse,
 		ResponseStatus: 200,
 	}
-	c := NewRestClient(httpClientMock, endpont)
+	c := NewRestClient(httpClientMock)
 	c.Post("Bearer X", "12345678912")
 	assert.Equal(t, http.MethodPost, httpClientMock.RequestMethod)
 	assert.Equal(t, http.StatusOK, httpClientMock.ResponseStatus)
-	assert.Equal(t, endpont, httpClientMock.RequestURL)
+	assert.Equal(t, endpoint, httpClientMock.RequestURL)
 	assert.Equal(t, expectedResponse, httpClientMock.ResponseBody)
 }
 
@@ -31,10 +31,10 @@ func TestPostPessoaFail(t *testing.T) {
 		ResponseBody:   expectedResponse,
 		ResponseStatus: 401,
 	}
-	c := NewRestClient(httpClientMock, endpont)
+	c := NewRestClient(httpClientMock)
 	c.Post("Bearer X", "12345678912")
 	assert.Equal(t, http.MethodPost, httpClientMock.RequestMethod)
 	assert.Equal(t, http.StatusUnauthorized, httpClientMock.ResponseStatus)
-	assert.Equal(t, endpont, httpClientMock.RequestURL)
+	assert.Equal(t, endpoint, httpClientMock.RequestURL)
 	assert.Equal(t, expectedResponse, httpClientMock.ResponseBody)
 }

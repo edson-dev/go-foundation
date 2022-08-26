@@ -30,9 +30,9 @@ func GetInt(envVar string, defaultValue int) int {
 func CheckRequired(envVarArgs ...string) {
 	for _, envVar := range envVarArgs {
 		if os.Getenv(envVar) == "" {
-			fmt.Sprint("Environment variable '%s' is required.", envVar)
+			fmt.Sprintf("Environment variable '%s' is required.", envVar)
 		}
 
-		fmt.Sprint("Environment variable '%s' is ok.", envVar)
+		fmt.Sprintf("Environment variable '%s' is ok.", envVar)
 	}
 }

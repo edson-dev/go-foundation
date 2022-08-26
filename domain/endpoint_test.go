@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	neowayendpont = "mock"
+	endpont = "mock"
 )
 
 func TestPostPass(t *testing.T) {
@@ -28,12 +28,12 @@ func TestPostPass(t *testing.T) {
 		ResponseStatus: 200,
 	}
 
-	c := rest_client.NewRestClient(httpClientMock, neowayendpont)
+	c := rest_client.NewRestClient(httpClientMock)
 	s := NewEndpoint(c)
 	w := httptest.NewRecorder()
 	cxt, _ := gin.CreateTestContext(w)
 	cxt.Request = &http.Request{
-		RequestURI: neowayendpont,
+		RequestURI: endpont,
 		Header:     make(http.Header),
 		Body:       input,
 		Method:     http.MethodPost,
@@ -53,12 +53,12 @@ func TestPostFail(t *testing.T) {
 		ResponseStatus: 401,
 	}
 
-	c := rest_client.NewRestClient(httpClientMock, neowayendpont)
+	c := rest_client.NewRestClient(httpClientMock)
 	s := NewEndpoint(c)
 	w := httptest.NewRecorder()
 	cxt, _ := gin.CreateTestContext(w)
 	cxt.Request = &http.Request{
-		RequestURI: neowayendpont,
+		RequestURI: endpont,
 		Header:     make(http.Header),
 		Body:       input,
 		Method:     http.MethodPost,

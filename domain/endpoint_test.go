@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	mock "go-foundation/pkg/http_client_mock"
+	mock "go-foundation/pkg/mocks"
 	"go-foundation/pkg/rest_client"
 	"io"
 	"net/http"

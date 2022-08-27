@@ -1,4 +1,4 @@
-package httpclientmock
+package mocks
 
 import (
 	"bytes"

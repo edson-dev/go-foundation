@@ -2,7 +2,7 @@ package rest_client
 
 import (
 	"github.com/stretchr/testify/assert"
-	"go-foundation/pkg/http_client_mock"
+	"go-foundation/pkg/mocks"
 	"net/http"
 	"testing"
 )
@@ -13,7 +13,7 @@ var (
 
 func TestPostPessoaPass(t *testing.T) {
 	var expectedResponse = `[{"test": 0.9,"test2": 0.028079710144927536}]`
-	httpClientMock := &httpclientmock.Mock{
+	httpClientMock := &mocks.Mock{
 		ResponseBody:   expectedResponse,
 		ResponseStatus: 200,
 	}
@@ -27,7 +27,7 @@ func TestPostPessoaPass(t *testing.T) {
 
 func TestPostPessoaFail(t *testing.T) {
 	var expectedResponse = `{"error": "Unauthorized: \"credential not found\""}`
-	httpClientMock := &httpclientmock.Mock{
+	httpClientMock := &mocks.Mock{
 		ResponseBody:   expectedResponse,
 		ResponseStatus: 401,
 	}

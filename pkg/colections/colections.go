@@ -1,20 +1,42 @@
 package colections
 
-import "reflect"
+import (
+	"fmt"
+	"go-foundation/pkg/json"
+	"reflect"
+)
 
-func MakeHash[T comparable](field string, input []T) map[string]T {
+func MakeHashStruct[T interface{}](field string, input []T) map[string]T {
 	mapper := make(map[string]T)
-	for _, data := range input {
+	for i, data := range input {
+		fmt.Println(input[i])
 		index := reflect.ValueOf(data).FieldByName(field)
 		mapper[index.String()] = data
 	}
 	return mapper
 }
-func MakeHashList[T comparable](field string, input []T) map[string][]T {
+
+func MakeHashInterface[T json.Json](field string, input []T) map[string]interface{} {
+	mapper := make(map[string]interface{})
+	for _, data := range input {
+		index := data[field].(string)
+		mapper[index] = data
+	}
+	return mapper
+}
+func MakeHashList[T any](field string, input []T) map[string][]T {
 	mapper := make(map[string][]T)
 	for _, data := range input {
 		index := reflect.ValueOf(data).FieldByName(field)
 		mapper[index.String()] = append(mapper[index.String()], data)
+	}
+	return mapper
+}
+func MakeHashListInterface[T json.Json](field string, input []T) map[string][]T {
+	mapper := make(map[string][]T)
+	for _, data := range input {
+		index := data[field].(string)
+		mapper[index] = append(mapper[index], data)
 	}
 	return mapper
 }

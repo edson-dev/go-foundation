@@ -2,29 +2,31 @@ package json
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 type Json map[string]interface{}
 
-func ImportByte(data []byte) Json {
+var Value Json
+
+func ImportByte(data []byte) (*Json, error) {
 	new := make(Json)
 	err := json.Unmarshal(data, &new)
-	if err != nil {
-		fmt.Printf("Error Inporting data json")
-	}
-	return new
+	return &new, err
 }
-func ImportString(data string) Json {
+func ImportString(data string) (*Json, error) {
 	return ImportByte([]byte(data))
 }
-func (j *Json) Export() []byte {
-	export, err := json.Marshal(j)
-	if err != nil {
-		fmt.Printf("Error Exporting data json")
-	}
-	return export
+func (j Json) Add(field string, value interface{}) {
+	j[field] = value
 }
-func (j *Json) ExportString() string {
-	return string(j.Export())
+func (j Json) Remove(field string) {
+	delete(j, field)
+}
+func (j *Json) Export() ([]byte, error) {
+	export, err := json.Marshal(j)
+	return export, err
+}
+func (j *Json) ExportString() (string, error) {
+	v, e := j.Export()
+	return string(v), e
 }

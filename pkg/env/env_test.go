@@ -1,8 +1,8 @@
 package env_test
 
 import (
+	"github.com/edson-dev/go-foundation/pkg/env"
 	"github.com/stretchr/testify/assert"
-	"go-foundation/pkg/env"
 	"os"
 	"testing"
 )

@@ -2,11 +2,11 @@ package domain
 
 import (
 	"encoding/json"
+	mock "github.com/edson-dev/go-foundation/pkg/mocks"
+	"github.com/edson-dev/go-foundation/pkg/rest_client"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	mock "go-foundation/pkg/mocks"
-	"go-foundation/pkg/rest_client"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -20,7 +20,7 @@ var (
 
 func TestPostPass(t *testing.T) {
 	gin.SetMode(gin.TestMode)
-	var expectedResponse, _ = json.Marshal(`{}`)
+	var expectedResponse, _ = json.Marshal(`[{"cpf":"test"}]`)
 	var expectedResponseApi = `[{"cpf":"test"}]`
 	input := io.NopCloser(strings.NewReader(`[{"cpf":"test"}]`))
 	httpClientMock := &mock.Mock{
@@ -45,7 +45,7 @@ func TestPostPass(t *testing.T) {
 
 func TestPostFail(t *testing.T) {
 	gin.SetMode(gin.TestMode)
-	var expectedResponse, _ = json.Marshal(`{}`)
+	var expectedResponse, _ = json.Marshal(`{"error": "Unauthorized: \"credential not found\""}`)
 	var expectedResponseApi = `{"error": "Unauthorized: \"credential not found\""}`
 	input := io.NopCloser(strings.NewReader(`[{"cpf":"test"}]`))
 	httpClientMock := &mock.Mock{

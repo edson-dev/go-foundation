@@ -1,8 +1,8 @@
 package httpclient_test
 
 import (
+	"github.com/edson-dev/go-foundation/pkg/http_client"
 	"github.com/stretchr/testify/assert"
-	"go-foundation/pkg/http_client"
 	"testing"
 	"time"
 )

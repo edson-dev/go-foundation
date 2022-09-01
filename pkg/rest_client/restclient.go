@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/cenkalti/backoff"
-	"go-foundation/pkg/http_client"
+	httpclient "github.com/edson-dev/go-foundation/pkg/http_client"
 	"io"
 	"net/http"
 	"strings"
@@ -13,23 +13,23 @@ import (
 
 type RestClient struct {
 	httpClient httpclient.HTTPClient
-	url        string
-	body       string
+	Url        string
+	Body       string
 }
 
 func NewRestClient(client httpclient.HTTPClient) *RestClient {
 	return &RestClient{
 		httpClient: client,
-		url:        `www.google.com.br`,
-		body:       `{"body": ["test"],"size": 10,"query": {"this": %s}}`,
+		Url:        `www.google.com.br`,
+		Body:       `{"body": ["test"],"size": 10,"query": {"this": %s}}`,
 	}
 }
 func (rc *RestClient) Post(autorization string, id string) (data []byte, err error) {
 	ebo := backoff.NewExponentialBackOff()
 	ebo.MaxInterval = 10 * time.Second
 	err = backoff.Retry(func() error {
-		req, err := http.NewRequest(http.MethodPost, rc.url, strings.NewReader(fmt.Sprintf(rc.body, id)))
-		req.Header.Add("Authorization", autorization)
+		req, err := http.NewRequest(http.MethodPost, rc.Url, strings.NewReader(fmt.Sprintf(rc.Body, id)))
+		req.Header = MakeHashHeader([]Header{{Key: "Autorization", Value: "Bearer X"}})
 		if err != nil {
 			fmt.Sprintf("Error on request:{%s}", err.Error())
 			return err

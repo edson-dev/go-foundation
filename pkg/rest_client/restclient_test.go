@@ -1,8 +1,8 @@
 package rest_client
 
 import (
+	"github.com/edson-dev/go-foundation/pkg/mocks"
 	"github.com/stretchr/testify/assert"
-	"go-foundation/pkg/mocks"
 	"net/http"
 	"testing"
 )

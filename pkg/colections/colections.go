@@ -2,7 +2,7 @@ package colections
 
 import (
 	"fmt"
-	"go-foundation/pkg/json"
+	"github.com/edson-dev/go-foundation/pkg/json"
 	"reflect"
 )
 
@@ -24,6 +24,7 @@ func MakeHashInterface[T json.Json](field string, input []T) map[string]interfac
 	}
 	return mapper
 }
+
 func MakeHashList[T any](field string, input []T) map[string][]T {
 	mapper := make(map[string][]T)
 	for _, data := range input {

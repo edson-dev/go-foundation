@@ -1,21 +1,24 @@
 package domain
 
 import (
+	"github.com/edson-dev/go-foundation/pkg/logger"
+	"github.com/edson-dev/go-foundation/pkg/rest_client"
 	"github.com/gin-gonic/gin"
-	"go-foundation/pkg/rest_client"
 	"net/http"
 )
 
 type Endpoint struct {
-	httpClient *rest_client.RestClient
+	restClient *rest_client.RestClient
 }
 
-func NewEndpoint(httpClient *rest_client.RestClient) *Endpoint {
+func NewEndpoint(restClient *rest_client.RestClient) *Endpoint {
 	return &Endpoint{
-		httpClient: httpClient,
+		restClient: restClient,
 	}
 }
 
 func (s *Endpoint) Post(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, "{}")
+	v, e := s.restClient.Post("", "")
+	logger.Throw(e)
+	c.IndentedJSON(http.StatusOK, string(v))
 }

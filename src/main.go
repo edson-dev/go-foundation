@@ -34,7 +34,7 @@ func main() {
 	})
 	router.GET("/docs", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "swagger.html", gin.H{
-			"title": "Main website",
+			"authorization": c.Request.Header.Get("Authorization"),
 		})
 	})
 	router.GET("/swagger", func(c *gin.Context) {

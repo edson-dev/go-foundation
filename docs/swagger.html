@@ -7,7 +7,6 @@
             name="description"
             content="SwaggerUI"
     />
-    <title>SwaggerUI</title>
     <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui.css" />
 </head>
 <body>
@@ -17,12 +16,12 @@
     console.log("Test")
     window.onload = () => {
         ui = SwaggerUIBundle({
-            url: './swagger.yaml',
+            url: './swagger.json',
             dom_id: '#swagger-ui',
             requestInterceptor: (req) => {
                 if (req.loadSpec) {
                     // Add the header to "try it out" calls but not spec fetches
-                    req.headers.Authorization = "Bearer XX";
+                    req.headers.Authorization = {{.authorization}};
                 }
                 return req;
             },

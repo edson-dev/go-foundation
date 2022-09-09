@@ -1,5 +1,7 @@
 package docs
 
+var Link = `var newWin = open('url','windowName','height=300,width=300');
+newWin.document.write('%s');`
 var Def = `{
                 swagger: '2.0',
                 info: {

@@ -7,27 +7,31 @@ import (
 	"github.com/edson-dev/go-foundation/pkg/http_client"
 	"github.com/edson-dev/go-foundation/pkg/json"
 	"github.com/edson-dev/go-foundation/pkg/logger"
-	middlewares "github.com/edson-dev/go-foundation/pkg/midlewares"
+	"github.com/edson-dev/go-foundation/pkg/logger/log"
 	"github.com/edson-dev/go-foundation/pkg/rest_client"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
+func print(i interfaces.Logger) {
+	println(i.GetLevel())
+}
 func init() {
 	logger.SetLevel("")
 }
 func main() {
 	s := `{"Name": "India", "test": "Test123"`
 	_, err := json.ImportString(s)
-	println(logger.Level.String())
+	println(logger.GetLevel())
 	logger.Throw(err)
 	router := gin.New()
 	router.LoadHTMLGlob("docs/*")
 	client := rest_client.NewRestClient(httpclient.NewHTTPClient(10))
 	endpoint := domain.NewEndpoint(client)
-	router.Use(middlewares.Auth())
+	//router.Use(middlewares.Auth())
 	router.GET("/endpoint", endpoint.Post)
 	router.GET("/swagger.json", func(c *gin.Context) {
+		c.Header("Content-Security-Policy", "default-src 'none';")
 		c.HTML(http.StatusOK, "swagger.json", gin.H{
 			"title": "json doc",
 		})

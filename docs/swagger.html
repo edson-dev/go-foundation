@@ -13,10 +13,26 @@
 <div id="swagger-ui"></div>
 <script src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-bundle.js" crossorigin></script>
 <script>
-    console.log("Test")
-    window.onload = () => {
-        ui = SwaggerUIBundle({
-            url: './swagger.json',
+        window.ui = SwaggerUIBundle({
+            spec: {
+                "swagger": "2.0",
+                "info"  : {
+                    "title": "test",
+                    "version": "1.0.0"
+                },
+                "host": "google.com.br",
+                "paths": {
+                    "/": {
+                        "get": {
+                            "responses": {
+                                "200": {
+                                    "description": 'OK'
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             dom_id: '#swagger-ui',
             requestInterceptor: (req) => {
                 if (req.loadSpec) {
@@ -25,9 +41,12 @@
                 }
                 return req;
             },
+            responseInterceptor: (resp) => {
+                console.log(resp);
+                return resp;
+            },
         });
-        window.ui = ui
-    };
+
 </script>
 </body>
 </html>
